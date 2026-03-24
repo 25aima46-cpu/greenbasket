@@ -2,28 +2,25 @@
 <html>
 <head>
   <title>GreenBasket</title>
-  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>🌿 GreenBasket</h1>
-<h2>Organic Grocery Store</h2>
+<h1>GreenBasket 🥬</h1>
 
-<p><b>Name:</b> S Sylvester Galilee</p>
-<p><b>Class:</b> 2nd Sem BSC AIML A</p>
-<p><b>Email:</b> 25aima46@kristujayanti.com</p>
+<input type="text" id="name" placeholder="Name"><br><br>
+<input type="email" id="email" placeholder="Email"><br><br>
 
-<h3>Our Products</h3>
+<select id="product">
+  <option>Apples</option>
+  <option>Carrots</option>
+  <option>Spinach</option>
+</select><br><br>
 
-<div class="products">
-  <div class="card">🍎 Apples - ₹120/kg</div>
-  <div class="card">🥕 Carrots - ₹60/kg</div>
-  <div class="card">🥬 Spinach - ₹40</div>
-</div>
+<input type="number" id="quantity" placeholder="Quantity"><br><br>
 
-<a href="portfolio.html">
-<button>Order Now</button>
-</a>
+<button onclick="orderNow()">Order Now</button>
+
+<script src="script.js"></script>
 
 </body>
 </html>

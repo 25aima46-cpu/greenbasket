@@ -6,6 +6,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Railway DB connection (IMPORTANT)
 const db = mysql.createConnection(process.env.MYSQL_PUBLIC_URL);
 
 db.connect((err) => {
@@ -14,6 +15,33 @@ db.connect((err) => {
   } else {
     console.log("Connected to Railway DB ✅");
   }
+});
+
+// API to insert order
+app.post("/order", (req, res) => {
+  const { name, email, product, quantity } = req.body;
+
+  const sql = "INSERT INTO orders (name, email, product, quantity) VALUES (?, ?, ?, ?)";
+
+  db.query(sql, [name, email, product, quantity], (err, result) => {
+    if (err) {
+      console.log(err);
+      res.send("Error");
+    } else {
+      res.send("Order placed successfully ✅");
+    }
+  });
+});
+
+// API to get orders
+app.get("/orders", (req, res) => {
+  db.query("SELECT * FROM orders", (err, result) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(result);
+    }
+  });
 });
 
 app.get("/", (req, res) => {
