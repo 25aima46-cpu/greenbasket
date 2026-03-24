@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GreenBasket</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>🌿 GreenBasket</h1>
+<h2>Organic Grocery Store</h2>
+
+<p><b>Name:</b> S Sylvester Galilee</p>
+<p><b>Class:</b> 2nd Sem BSC AIML A</p>
+<p><b>Email:</b> 25aima46@kristujayanti.com</p>
+
+<h3>Our Products</h3>
+
+<div class="products">
+  <div class="card">🍎 Apples - ₹120/kg</div>
+  <div class="card">🥕 Carrots - ₹60/kg</div>
+  <div class="card">🥬 Spinach - ₹40</div>
+</div>
+
+<a href="portfolio.html">
+<button>Order Now</button>
+</a>
+
+</body>
+</html>
+body {
+  font-family: Arial;
+  background: linear-gradient(to right, #56ab2f, #a8e063);
+  color: white;
+  text-align: center;
+}
+
+h1 {
+  font-size: 40px;
+}
+
+button {
+  padding: 10px 20px;
+  background: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+input, select {
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  border: none;
+}
+
+table {
+  margin: auto;
+  background: white;
+  color: black;
+}
