@@ -1,14 +1,17 @@
 const express = require("express");
-const cors = require("cors");
 const mysql = require("mysql");
 const path = require("path");
 
 const app = express();
 
-app.use(cors());
+// Middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// ✅ DATABASE CONNECTION
+// Serve frontend
+app.use(express.static(path.join(__dirname, "../frontend")));
+
+// Database connection
 const db = mysql.createConnection({
   host: process.env.MYSQLHOST,
   user: process.env.MYSQLUSER,
@@ -17,22 +20,21 @@ const db = mysql.createConnection({
   port: process.env.MYSQLPORT
 });
 
+// Connect to DB
 db.connect((err) => {
   if (err) {
-    console.log("DB ERROR:", err);
+    console.log("DB Connection Failed:", err);
   } else {
-    console.log("Connected to DB ✅");
+    console.log("Connected to MySQL ✅");
   }
 });
 
-// ✅ SERVE FRONTEND
-app.use(express.static(path.join(__dirname, "../")));
-
+// Home route
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../index.html"));
+  res.sendFile(path.join(__dirname, "../frontend/index.html"));
 });
 
-// ✅ ADD ORDER
+// Add order
 app.post("/add-order", (req, res) => {
   console.log("DATA RECEIVED:", req.body);
 
@@ -50,67 +52,19 @@ app.post("/add-order", (req, res) => {
     }
   });
 });
-  console.log("DATA RECEIVED:", req.body);
 
-  const { name, email, className, item } = req.body;
-
-const sql = "INSERT INTO orders (name, email, class, item) VALUES (?, ?, ?, ?)";
-
-db.query(sql, [name, email, className, item], (err, result) => {
-  if (err) {
-    console.log("INSERT ERROR:", err);
-    return res.send("Error inserting data");
-  }
-  res.send("Order placed successfully");
-});
-    if (err) {
-      console.log("INSERT ERROR:", err);
-      res.send("Error inserting data");
-    } else {
-      console.log("Inserted!");
-      res.send("Order Placed Successfully ✅");
-    }
-  });
-});
-
-// ✅ VIEW ORDERS
+// View orders
 app.get("/orders", (req, res) => {
-  db.query("SELECT * FROM orders", (err, result) => {
+  db.query("SELECT * FROM orders", (err, results) => {
     if (err) {
-      res.send("Error fetching data");
-    } else {
-      let html = `
-        <h1>Orders List 📦</h1>
-        <table border="1" cellpadding="10">
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Product</th>
-            <th>Quantity</th>
-          </tr>
-      `;
-
-      result.forEach(row => {
-        html += `
-          <tr>
-            <td>${row.id}</td>
-            <td>${row.name}</td>
-            <td>${row.product}</td>
-            <td>${row.quantity}</td>
-          </tr>
-        `;
-      });
-
-      html += "</table>";
-
-      res.send(html);
+      return res.send("Error fetching data");
     }
+    res.json(results);
   });
 });
 
-// ✅ START SERVER
-const PORT = process.env.PORT || 3000;
-
+// Start server
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log("Server running 🚀");
+  console.log(`Server running on port ${PORT}`);
 });
