@@ -1,59 +1,52 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>GreenBasket Project</title>
+  <meta charset="UTF-8">
+  <title>GreenBasket</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>Welcome to GreenBasket 🛒</h1>
+  <div class="container">
 
-<h3>Student Details</h3>
-<p><b>Name:</b> Sylvester Galilee</p>
-<p><b>Class:</b> 2nd Sem BSc AIML/p>
-<p><b>Email:</b> 25aima46@kristujayanti.com/p>
+    <h1>🛒 GreenBasket</h1>
 
-<hr>
+    <div class="card">
+      <h2>Place Your Order</h2>
 
-<h2>Place Order</h2>
+      <input type="text" id="name" placeholder="Enter your name">
+      <input type="text" id="product" placeholder="Enter product">
+      <input type="number" id="quantity" placeholder="Enter quantity">
 
-<form id="orderForm">
-  <input type="text" id="name" placeholder="Your Name" required><br><br>
-  <input type="text" id="product" placeholder="Product" required><br><br>
-  <input type="number" id="quantity" placeholder="Quantity" required><br><br>
+      <button onclick="placeOrder()">Place Order 🚀</button>
 
-  <button type="submit">Place Order</button>
-</form>
+      <p id="message"></p>
+    </div>
 
-<br>
+  </div>
 
-<a href="/orders">View Orders</a>
+  <script>
+    function placeOrder() {
+      const name = document.getElementById("name").value;
+      const product = document.getElementById("product").value;
+      const quantity = document.getElementById("quantity").value;
 
-<script>
-document.getElementById("orderForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const data = {
-    name: document.getElementById("name").value,
-    product: document.getElementById("product").value,
-    quantity: document.getElementById("quantity").value
-  };
-
-  try {
-    const res = await fetch("/add-order", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    });
-
-    const text = await res.text();
-    alert(text);
-  } catch (err) {
-    alert("Error submitting order");
-  }
-});
-</script>
+      fetch("/add-order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ name, product, quantity })
+      })
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("message").innerText = data;
+      })
+      .catch(err => {
+        document.getElementById("message").innerText = "Error ❌";
+      });
+    }
+  </script>
 
 </body>
 </html>
