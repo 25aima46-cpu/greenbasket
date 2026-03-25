@@ -7,46 +7,53 @@
 </head>
 <body>
 
-  <div class="container">
+<div class="container">
 
+  <!-- 🎓 STUDENT DETAILS -->
+  <div class="header">
     <h1>🛒 GreenBasket</h1>
-
-    <div class="card">
-      <h2>Place Your Order</h2>
-
-      <input type="text" id="name" placeholder="Enter your name">
-      <input type="text" id="product" placeholder="Enter product">
-      <input type="number" id="quantity" placeholder="Enter quantity">
-
-      <button onclick="placeOrder()">Place Order 🚀</button>
-
-      <p id="message"></p>
-    </div>
-
+    <p><b>Name:</b> S SYLVESTER GALILEE</p>
+    <p><b>Class:</b> 2nd Sem BSC AIML A</p>
+    <p><b>Email:</b> 25aima46@kristujayanti.com</p>
   </div>
 
-  <script>
-    function placeOrder() {
-      const name = document.getElementById("name").value;
-      const product = document.getElementById("product").value;
-      const quantity = document.getElementById("quantity").value;
+  <!-- 🧾 ORDER CARD -->
+  <div class="card">
+    <h2>Place Your Order</h2>
 
-      fetch("/add-order", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ name, product, quantity })
-      })
-      .then(res => res.text())
-      .then(data => {
-        document.getElementById("message").innerText = data;
-      })
-      .catch(err => {
-        document.getElementById("message").innerText = "Error ❌";
-      });
-    }
-  </script>
+    <input type="text" id="name" placeholder="Enter your name">
+    <input type="text" id="product" placeholder="Enter product">
+    <input type="number" id="quantity" placeholder="Enter quantity">
+
+    <button onclick="placeOrder()">Place Order 🚀</button>
+
+    <p id="message"></p>
+  </div>
+
+</div>
+
+<script>
+function placeOrder() {
+  const name = document.getElementById("name").value;
+  const product = document.getElementById("product").value;
+  const quantity = document.getElementById("quantity").value;
+
+  fetch("/add-order", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ name, product, quantity })
+  })
+  .then(res => res.text())
+  .then(data => {
+    document.getElementById("message").innerText = data;
+  })
+  .catch(() => {
+    document.getElementById("message").innerText = "Error ❌";
+  });
+}
+</script>
 
 </body>
 </html>
