@@ -42,3 +42,23 @@ app.get("/orders", (req, res) => {
 });
 
 app.listen(process.env.PORT || 3000);
+app.get("/", (req, res) => {
+  res.send("Welcome to GreenBasket 🛒 Server is running!");
+});
+const path = require("path");
+
+app.use(express.static(path.join(__dirname, "../")));
+app.post("/order", (req, res) => {
+  const { name, item, quantity } = req.body;
+
+  const sql = "INSERT INTO orders (name, item, quantity) VALUES (?, ?, ?)";
+
+  db.query(sql, [name, item, quantity], (err, result) => {
+    if (err) {
+      console.log(err);
+      res.send("Error saving order");
+    } else {
+      res.send("Order saved successfully ✅");
+    }
+  });
+});

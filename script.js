@@ -1,16 +1,36 @@
-async function loadOrders() {
-  const res = await fetch("/orders");
-  const data = await res.json();
+const API = "https://YOUR-BACKEND.onrender.com";
 
-  const container = document.getElementById("orders");
-  container.innerHTML = "";
+function placeOrder() {
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const studentClass = document.getElementById("class").value;
+  const item = document.getElementById("item").value;
 
-  data.forEach(order => {
-    const div = document.createElement("div");
-    div.className = "card";
-    div.innerHTML = `
-      <p>ID: ${order.id}</p>
-    `;
-    container.appendChild(div);
-  });
+  fetch(API + "/orders", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ name, email, studentClass, item })
+  })
+  .then(res => res.json())
+  .then(() => loadOrders());
 }
+
+function loadOrders() {
+  fetch(API + "/orders")
+    .then(res => res.json())
+    .then(data => {
+      const list = document.getElementById("orders");
+      list.innerHTML = "";
+
+      data.forEach(order => {
+        const li = document.createElement("li");
+        li.textContent =
+          order.name + " (" + order.studentClass + ") ordered " + order.item;
+        list.appendChild(li);
+      });
+    });
+}
+
+loadOrders();

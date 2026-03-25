@@ -1,28 +1,16 @@
 body {
-  font-family: Arial;
   text-align: center;
-  background: #f4f4f4;
+  font-family: Arial;
+  margin-top: 50px;
 }
 
-h1 {
-  color: green;
+input {
+  padding: 10px;
+  margin: 10px;
 }
 
 button {
-  padding: 10px 20px;
+  padding: 10px;
   background: green;
   color: white;
-  border: none;
-  cursor: pointer;
-}
-
-#orders {
-  margin-top: 20px;
-}
-
-.card {
-  background: white;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 8px;
 }

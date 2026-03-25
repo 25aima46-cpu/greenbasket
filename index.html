@@ -1,17 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Green Basket</title>
-  <link rel="stylesheet" href="style.css">
+  <title>GreenBasket Order</title>
 </head>
 <body>
 
-<h1>🛒 Green Basket Orders</h1>
+<h1>Place Your Order 🛒</h1>
 
-<button onclick="loadOrders()">Load Orders</button>
+<form id="orderForm">
+  <input type="text" id="name" placeholder="Your Name" required><br><br>
+  <input type="text" id="item" placeholder="Item" required><br><br>
+  <input type="number" id="quantity" placeholder="Quantity" required><br><br>
+  <button type="submit">Order</button>
+</form>
 
-<div id="orders"></div>
+<script>
+document.getElementById("orderForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-<script src="script.js"></script>
+  const data = {
+    name: document.getElementById("name").value,
+    item: document.getElementById("item").value,
+    quantity: document.getElementById("quantity").value
+  };
+
+  const res = await fetch("/order", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  });
+
+  const text = await res.text();
+  alert(text);
+});
+</script>
+
 </body>
 </html>
