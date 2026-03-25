@@ -38,11 +38,11 @@ app.get("/", (req, res) => {
 app.post("/add-order", (req, res) => {
   console.log("DATA RECEIVED:", req.body);
 
-  const { name, email, className, item } = req.body;
+  const { name, product, quantity } = req.body;
 
-  const sql = "INSERT INTO orders (name, email, class, item) VALUES (?, ?, ?, ?)";
+  const sql = "INSERT INTO orders (name, product, quantity) VALUES (?, ?, ?)";
 
-  db.query(sql, [name, email, className, item], (err, result) => {
+  db.query(sql, [name, product, quantity], (err, result) => {
     if (err) {
       console.log("INSERT ERROR:", err);
       return res.send("Error inserting data");
