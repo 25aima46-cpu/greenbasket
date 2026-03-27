@@ -6,38 +6,33 @@ body {
   animation: gradient 10s ease infinite;
 }
 
-/* 🌈 animated bg */
 @keyframes gradient {
   0% {background-position:0% 50%;}
   50% {background-position:100% 50%;}
   100% {background-position:0% 50%;}
 }
 
-/* navbar */
 .navbar {
   display: flex;
   justify-content: space-between;
   padding: 15px;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0,0,0,0.6);
   color: white;
 }
 
 .navbar a {
   color: white;
   text-decoration: none;
-  font-weight: bold;
 }
 
-/* header */
 .header {
   text-align: center;
   color: white;
   margin-top: 20px;
 }
 
-/* card */
 .card {
-  background: white;
+  background: rgb(98, 4, 213);
   padding: 20px;
   width: 300px;
   margin: 30px auto;
@@ -46,24 +41,21 @@ body {
   animation: fadeIn 1s ease;
 }
 
-/* animation */
 @keyframes fadeIn {
   from {opacity:0; transform:translateY(20px);}
   to {opacity:1;}
 }
 
-/* inputs */
 input {
   width: 90%;
   padding: 10px;
   margin: 10px;
 }
 
-/* button */
 button {
   padding: 10px;
-  background: #ff6a00;
-  color: white;
+  background: #e74803;
+  color: rgb(113, 241, 8);
   border: none;
   cursor: pointer;
   transition: 0.3s;
