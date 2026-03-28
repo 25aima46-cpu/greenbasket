@@ -3,10 +3,14 @@ const mysql = require("mysql2");
 const path = require("path");
 
 const app = express();
-app.use(express.json());
-app.use(express.static(__dirname));
 
-// ✅ MySQL connection (Railway ENV)
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// ✅ Serve frontend files
+app.use(express.static(path.join(__dirname, "..")));
+
+// ✅ MySQL connection (Railway)
 const db = mysql.createConnection({
   host: process.env.MYSQLHOST,
   user: process.env.MYSQLUSER,
@@ -25,13 +29,16 @@ db.connect((err) => {
 
 // ✅ Home page
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+  res.sendFile(path.join(__dirname, "../index.html"));
+});
+
+// ✅ Portfolio page
+app.get("/portfolio", (req, res) => {
+  res.sendFile(path.join(__dirname, "../portfolio.html"));
 });
 
 // ✅ Insert order
 app.post("/add-order", (req, res) => {
-  console.log("DATA RECEIVED:", req.body);
-
   const { name, email, className, item } = req.body;
 
   const sql = "INSERT INTO orders (name, email, class, item) VALUES (?, ?, ?, ?)";
@@ -40,24 +47,19 @@ app.post("/add-order", (req, res) => {
     if (err) {
       console.log("INSERT ERROR:", err);
       return res.send("Error inserting data");
-    } else {
-      console.log("Inserted!");
-      res.send("Order Placed Successfully ✅");
     }
+    res.send("Order Placed Successfully ✅");
   });
 });
 
 // ✅ View orders
 app.get("/orders", (req, res) => {
   db.query("SELECT * FROM orders", (err, result) => {
-    if (err) {
-      return res.send("Error fetching data");
-    }
+    if (err) return res.send("Error fetching data");
     res.json(result);
   });
 });
 
-// ✅ Start server
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
